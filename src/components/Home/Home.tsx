@@ -1,11 +1,9 @@
 import React from "react";
-import { action, observable } from "mobx";
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { IHomeVM } from "./HomeVM";
 import { TopMovies } from "./TopMovies";
 import { AllMovies } from "./AllMovies";
+import { ByGenre } from "./ByGenre";
 
 export interface IHomeProps {
     homeVM: IHomeVM;
@@ -15,6 +13,7 @@ export const Home: React.FC<IHomeProps> = observer(({ homeVM }) => {
     return (
         <div>
             <TopMovies topMoviesVM={homeVM.topMoviesVM} />
+            <ByGenre />
             <AllMovies allMoviesVM={homeVM.allMoviesVM} />
         </div>
     );

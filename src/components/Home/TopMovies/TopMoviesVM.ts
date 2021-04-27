@@ -1,4 +1,4 @@
-import { computed, observable } from "mobx";
+import { computed } from "mobx";
 import { IMovieLoader } from "store/loaders";
 import { IMovieStore } from "store/stores";
 

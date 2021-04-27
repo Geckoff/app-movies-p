@@ -30,9 +30,48 @@ export class MovieLoader extends LoaderBase<IMovie, IMovieStore, IApiMovies> {
         this.store.topMoviesIds = this.getMoviesIds(movieModels);
     };
 
-    loadMoviesForPage = async (pageNumber: number, start: number, end: number) => {
-        const movieModels = await this.loadModels(this.api.fetchMoviesSlice.bind(this, start, end));
+    loadAllMoviesForPage = async (
+        pageNumber: number,
+        start: number,
+        end: number,
+        sort?: string
+    ) => {
+        const movieModels = await this.loadModels(
+            this.api.fetchMoviesSlice.bind(this, start, end, sort)
+        );
         this.store.allMoviesPerPageIds.set(pageNumber, this.getMoviesIds(movieModels));
+    };
+
+    loadAllMoviesCount = async () => {
+        const movieCount = await this.api.fetchMoviesCount();
+        this.store.allMoviesCount = movieCount;
+    };
+
+    loadGenreMoviesForPage = async (
+        genre: string,
+        pageNumber: number,
+        start: number,
+        end: number,
+        sort?: string
+    ) => {
+        const movieModels = await this.loadModels(
+            this.api.fetchGenreMoviesSlice.bind(this, genre, start, end, sort)
+        );
+        this.store.genreMoviesPerPageIds
+            .get(genre)
+            ?.set(pageNumber, this.getMoviesIds(movieModels));
+    };
+
+    loadGenreMoviesCount = async (genre: string) => {
+        const movieCount = await this.api.fetchGenreMoviesCount(genre);
+        this.store.genreMoviesCount.set(genre, movieCount);
+    };
+
+    loadMoviesSearch = async (searchTerm: string) => {
+        const movieModels = await this.loadModels(
+            this.api.fetchMoviesSearch.bind(this, searchTerm)
+        );
+        this.store.searchResults.set(searchTerm, this.getMoviesIds(movieModels));
     };
 }
 
