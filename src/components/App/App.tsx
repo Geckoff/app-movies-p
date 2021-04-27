@@ -8,12 +8,16 @@ import { SingleMovie } from "components/SingleMovie";
 import { GenreMovies } from "components/GenreMovies";
 import { SearchResults } from "components/Search/SearchResults";
 import { SearchInput } from "components/Search/SearchInput";
+import { NetworkActivityIndicator } from "components/NetworkActivityIndicator";
 
 export const App = observer(() => {
     const appRoot = useMemo(() => new AppRoot(), []);
 
     return (
         <>
+            <NetworkActivityIndicator
+                networkActivityIndicatorVM={appRoot.networkActivityIndicatorVM}
+            />
             <Router>
                 <SearchInput searchInputVM={appRoot.searchInputVM} />
                 <Switch>

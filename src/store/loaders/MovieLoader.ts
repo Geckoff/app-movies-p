@@ -14,20 +14,27 @@ export class MovieLoader extends LoaderBase<IMovie, IMovieStore, IApiMovies> {
 
     private loadModels = async (fetchMethod: () => Promise<any>) => {
         const moviesResponse = await fetchMethod();
-        const movieModels: IMovie[] = this.createModelsFromResponse(moviesResponse);
-        this.store.addMultiple(movieModels);
-        return movieModels;
+        if (moviesResponse !== null) {
+            const movieModels: IMovie[] = this.createModelsFromResponse(moviesResponse);
+            this.store.addMultiple(movieModels);
+            return movieModels;
+        }
+        return null;
     };
 
     loadMovieById = async (id: number) => {
         const movieResponse = await this.api.fetchMovieById(id);
-        const movieModel = this.createMovieModel(movieResponse);
-        this.store.add(movieModel);
+        if (movieResponse !== null) {
+            const movieModel = this.createMovieModel(movieResponse);
+            this.store.add(movieModel);
+        }
     };
 
     loadTopMovies = async () => {
         const movieModels = await this.loadModels(this.api.fetchTopMovies);
-        this.store.topMoviesIds = this.getMoviesIds(movieModels);
+        if (movieModels) {
+            this.store.topMoviesIds = this.getMoviesIds(movieModels);
+        }
     };
 
     loadAllMoviesForPage = async (
@@ -39,12 +46,16 @@ export class MovieLoader extends LoaderBase<IMovie, IMovieStore, IApiMovies> {
         const movieModels = await this.loadModels(
             this.api.fetchMoviesSlice.bind(this, start, end, sort)
         );
-        this.store.allMoviesPerPageIds.set(pageNumber, this.getMoviesIds(movieModels));
+        if (movieModels) {
+            this.store.allMoviesPerPageIds.set(pageNumber, this.getMoviesIds(movieModels));
+        }
     };
 
     loadAllMoviesCount = async () => {
         const movieCount = await this.api.fetchMoviesCount();
-        this.store.allMoviesCount = movieCount;
+        if (movieCount !== null) {
+            this.store.allMoviesCount = movieCount;
+        }
     };
 
     loadGenreMoviesForPage = async (
@@ -57,21 +68,27 @@ export class MovieLoader extends LoaderBase<IMovie, IMovieStore, IApiMovies> {
         const movieModels = await this.loadModels(
             this.api.fetchGenreMoviesSlice.bind(this, genre, start, end, sort)
         );
-        this.store.genreMoviesPerPageIds
-            .get(genre)
-            ?.set(pageNumber, this.getMoviesIds(movieModels));
+        if (movieModels) {
+            this.store.genreMoviesPerPageIds
+                .get(genre)
+                ?.set(pageNumber, this.getMoviesIds(movieModels));
+        }
     };
 
     loadGenreMoviesCount = async (genre: string) => {
         const movieCount = await this.api.fetchGenreMoviesCount(genre);
-        this.store.genreMoviesCount.set(genre, movieCount);
+        if (movieCount !== null) {
+            this.store.genreMoviesCount.set(genre, movieCount);
+        }
     };
 
     loadMoviesSearch = async (searchTerm: string) => {
         const movieModels = await this.loadModels(
             this.api.fetchMoviesSearch.bind(this, searchTerm)
         );
-        this.store.searchResults.set(searchTerm, this.getMoviesIds(movieModels));
+        if (movieModels) {
+            this.store.searchResults.set(searchTerm, this.getMoviesIds(movieModels));
+        }
     };
 }
 
