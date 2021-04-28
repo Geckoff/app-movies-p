@@ -25,7 +25,6 @@ export const MoviesPagination: React.FC<IMoviesPaginationProps> = observer(
             pagesCount,
             page,
             sortBySelectVM,
-            sortBy,
         } = moviesPaginationVM;
 
         const location = useLocation();
