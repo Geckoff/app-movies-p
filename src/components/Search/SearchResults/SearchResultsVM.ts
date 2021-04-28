@@ -29,14 +29,20 @@ export class SearchResultsVM {
             return null;
         }
 
-        // FIX THE ORDER
         const searchResultsModels = this.movieStore.values.filter((movie) =>
             this.searchResultsIds!.includes(movie.id)
         );
 
-        return searchResultsModels.length === this.searchResultsIds.length
-            ? searchResultsModels
-            : null;
+        if (searchResultsModels.length !== this.searchResultsIds.length) {
+            return [];
+        }
+
+        const searchResultsModelsMap = new Map();
+        searchResultsModels.forEach((model) => {
+            searchResultsModelsMap.set(model.id, model);
+        });
+
+        return this.searchResultsIds.map((id) => searchResultsModelsMap.get(id));
     }
 
     loadMovies = () => {

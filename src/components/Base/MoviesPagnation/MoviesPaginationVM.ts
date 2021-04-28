@@ -96,17 +96,30 @@ export class MoviesPaginationVM {
             return [];
         }
 
-        // FIX THE ORDER
         const moviesPerPageModels = this.movieStore.values.filter((movie) =>
             moviesIdsPerPage.includes(movie.id)
         );
 
-        return moviesPerPageModels.length === moviesIdsPerPage.length ? moviesPerPageModels : [];
+        if (moviesPerPageModels.length !== moviesIdsPerPage.length) {
+            return [];
+        }
+
+        const moviesPerPageModelsMap = new Map();
+        moviesPerPageModels.forEach((model) => {
+            moviesPerPageModelsMap.set(model.id, model);
+        });
+
+        return moviesIdsPerPage.map((id) => moviesPerPageModelsMap.get(id));
     }
 
     loadMovies = () => {
         if (this.moviesForPage.length === 0) {
-            this.loadMoviesForPage(this.page, this.sliceStart, this.sliceEnd, this.sortBy);
+            this.loadMoviesForPage(
+                this.page,
+                this.sliceStart,
+                this.sliceEnd,
+                this.sortBy !== SortBy.Default ? this.sortBy : undefined
+            );
         }
     };
 

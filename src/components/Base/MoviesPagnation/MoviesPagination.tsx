@@ -6,6 +6,7 @@ import { isNumeric } from "utils";
 import { IMoviesPaginationVM } from "./MoviesPaginationVM";
 import { Paginate } from "../Paginate";
 import { Select } from "../Input/Select";
+import { Label } from "reactstrap";
 
 export interface IMoviesPaginationProps {
     pagePath: string;
@@ -48,16 +49,33 @@ export const MoviesPagination: React.FC<IMoviesPaginationProps> = observer(
         }, []);
 
         return (
-            <div>
-                {sortBy}
-                <Select selectVM={sortBySelectVM} />
-                {moviesForPage.map((movie) => (
-                    <div key={movie.id}>
-                        <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
+            <div className="movie-grid">
+                <div className="movie-grid-select-block">
+                    <div className="movie-grid-select">
+                        <Label className="font-grey" for="sortby">
+                            Sort By
+                        </Label>
+                        <Select id="sortby" selectVM={sortBySelectVM} />
                     </div>
-                ))}
+                </div>
+
+                <div className="movie-grid-items">
+                    {moviesForPage.map((movie) => (
+                        <div className="movie-grid-item" key={movie.id}>
+                            <Link className="movie-grid-item-link" to={`/movie/${movie.id}`}>
+                                <img
+                                    className="movie-grid-item-image"
+                                    src={movie.posterPath}
+                                    alt={movie.title}
+                                />
+                            </Link>
+                        </div>
+                    ))}
+                </div>
                 {moviesCount && (
-                    <Paginate pagesCount={pagesCount} linkPath={pagePath} currentPage={page} />
+                    <div className="movie-grid-pagination">
+                        <Paginate pagesCount={pagesCount} linkPath={pagePath} currentPage={page} />
+                    </div>
                 )}
             </div>
         );

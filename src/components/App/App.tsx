@@ -7,8 +7,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { SingleMovie } from "components/SingleMovie";
 import { GenreMovies } from "components/GenreMovies";
 import { SearchResults } from "components/Search/SearchResults";
-import { Container } from "reactstrap";
-import { Header, PageContent } from "components/Layout";
+import { Header } from "components/Layout";
+import { ErrorPage } from "components/Error";
+import { NetworkActivityIndicator } from "components/NetworkActivityIndicator";
 
 export const App = observer(() => {
     const appRoot = useMemo(() => new AppRoot(), []);
@@ -48,9 +49,13 @@ export const App = observer(() => {
                                 />
                             )}
                         />
+                        <Route component={ErrorPage} />
                     </Switch>
                 </main>
             </Router>
+            <NetworkActivityIndicator
+                networkActivityIndicatorVM={appRoot.networkActivityIndicatorVM}
+            />
         </>
     );
 });
