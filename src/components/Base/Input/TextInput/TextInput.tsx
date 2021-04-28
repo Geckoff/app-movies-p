@@ -12,5 +12,13 @@ export const TextInput: React.FC<ITextInputProps> = observer(({ textInputVM, ...
         textInputVM.onChange(e.target.value);
     };
 
-    return <input type="text" onChange={onChange} value={textInputVM.value} {...props} />;
+    return (
+        <input
+            className="text-input"
+            type="text"
+            onChange={onChange}
+            value={textInputVM.value}
+            {...props}
+        />
+    );
 });

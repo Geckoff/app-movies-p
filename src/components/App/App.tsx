@@ -7,47 +7,49 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { SingleMovie } from "components/SingleMovie";
 import { GenreMovies } from "components/GenreMovies";
 import { SearchResults } from "components/Search/SearchResults";
-import { SearchInput } from "components/Search/SearchInput";
-import { NetworkActivityIndicator } from "components/NetworkActivityIndicator";
+import { Container } from "reactstrap";
+import { Header, PageContent } from "components/Layout";
 
 export const App = observer(() => {
     const appRoot = useMemo(() => new AppRoot(), []);
 
     return (
         <>
-            <NetworkActivityIndicator
-                networkActivityIndicatorVM={appRoot.networkActivityIndicatorVM}
-            />
             <Router>
-                <SearchInput searchInputVM={appRoot.searchInputVM} />
-                <Switch>
-                    <Route
-                        path="/"
-                        exact
-                        render={(props) => <Home {...props} homeVM={appRoot.homeVM} />}
-                    />
-                    <Route
-                        path="/movie/:id"
-                        exact
-                        render={(props) => (
-                            <SingleMovie {...props} singleMovieVM={appRoot.singleMovieVM} />
-                        )}
-                    />
-                    <Route
-                        path="/genre/:id"
-                        exact
-                        render={(props) => (
-                            <GenreMovies {...props} genreMoviesVMs={appRoot.genreVMs} />
-                        )}
-                    />
-                    <Route
-                        path="/search"
-                        exact
-                        render={(props) => (
-                            <SearchResults {...props} searchResultsVM={appRoot.searchResultsVM} />
-                        )}
-                    />
-                </Switch>
+                <Header searchInputVM={appRoot.searchInputVM} />
+                <main>
+                    <Switch>
+                        <Route
+                            path="/"
+                            exact
+                            render={(props) => <Home {...props} homeVM={appRoot.homeVM} />}
+                        />
+                        <Route
+                            path="/movie/:id"
+                            exact
+                            render={(props) => (
+                                <SingleMovie {...props} singleMovieVM={appRoot.singleMovieVM} />
+                            )}
+                        />
+                        <Route
+                            path="/genre/:id"
+                            exact
+                            render={(props) => (
+                                <GenreMovies {...props} genreMoviesVMs={appRoot.genreVMs} />
+                            )}
+                        />
+                        <Route
+                            path="/search"
+                            exact
+                            render={(props) => (
+                                <SearchResults
+                                    {...props}
+                                    searchResultsVM={appRoot.searchResultsVM}
+                                />
+                            )}
+                        />
+                    </Switch>
+                </main>
             </Router>
         </>
     );

@@ -1,0 +1,259 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
+$primaryColor: #2345e0;
+$fontColor: #333333;
+$whiteColor: #fff;
+$fontGreyColor: #bbbaba;
+$borderGreyColor: #e4e4e4;
+$backGroungGreyColor: #f4f5fa;
+
+$breakpoints: (
+    "tablet": 769px,
+);
+@mixin mq($width, $type: max) {
+    @if map_has_key($breakpoints, $width) {
+        $width: map_get($breakpoints, $width);
+        @if $type == max {
+            $width: $width - 1px;
+        }
+        @media only screen and (#{$type}-width: $width) {
+            @content;
+        }
+    }
+}
+
+@mixin box-shadow {
+    box-shadow: 0px 0px 6px 2px $borderGreyColor;
+}
+
+@mixin movie-radius {
+    border-radius: 4px;
+}
+
+.font-grey {
+    color: $fontGreyColor;
+}
+
+body,
+input {
+    color: $fontColor;
+    font-weight: 200;
+}
+
+body {
+    font-size: 13px;
+}
+
+.text-input {
+    border: 1px solid $borderGreyColor;
+    border-radius: 3px;
+    color: $fontGreyColor;
+    padding: 2px 8px;
+}
+
+.link-button {
+    display: inline-block;
+    background-color: $primaryColor;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: $whiteColor;
+    text-align: center;
+
+    &:hover {
+        color: $whiteColor;
+        text-decoration: none;
+    }
+}
+
+.header-wrapper {
+    @include box-shadow;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include mq("tablet") {
+            flex-direction: column;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+
+            @include mq("tablet") {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .header-left-logo {
+                display: inline-block;
+                width: 55px;
+                height: 55px;
+                background-color: $primaryColor;
+                color: $whiteColor;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                @include mq("tablet") {
+                    height: 30px;
+                }
+            }
+
+            .header-left-title {
+                margin-left: 23px;
+                font-size: 24px;
+                font-weight: 600;
+            }
+        }
+
+        .header-right {
+            @include mq("tablet") {
+                margin: 10px 0;
+            }
+        }
+    }
+}
+
+.home {
+    .top-movies-section {
+        padding: 40px 0;
+
+        .top-movies {
+            display: flex;
+            width: calc(100% + 20px);
+            transform: translateX(-10px);
+
+            @include mq("tablet") {
+                display: block;
+            }
+
+            .top-movie {
+                flex-basis: 20%;
+                padding: 10px;
+                @include movie-radius;
+
+                @include mq("tablet") {
+                    margin: 0 0 20px 0;
+                }
+
+                .top-movie-image {
+                    img {
+                        width: 100%;
+                        @include movie-radius;
+                    }
+                }
+
+                .top-movie-info {
+                    margin-top: 10px;
+
+                    .top-movie-info-top {
+                        display: flex;
+                        justify-content: space-between;
+
+                        .top-movie-title {
+                            line-height: 1em;
+                            flex-basis: calc(100% - 44px);
+                        }
+
+                        .top-movie-rating {
+                            text-align: right;
+                            flex-basis: 43px;
+                            color: $primaryColor;
+                        }
+                    }
+
+                    .top-movie-genre {
+                        font-size: 0.85em;
+                        line-height: 1.3em;
+                    }
+
+                    .top-movie-details-link {
+                        width: 100%;
+                        margin-top: 15px;
+                        display: none;
+                    }
+                }
+
+                &:hover {
+                    @include box-shadow;
+
+                    .top-movie-details-link {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+
+    .by-genre-section {
+        background-color: $backGroungGreyColor;
+        padding: 40px 0 60px 0;
+
+        .by-genre {
+            .by-genre-browse {
+                font-weight: 400;
+                font-size: 1.5em;
+            }
+
+            .by-genre-genres {
+                margin-top: 25px;
+                display: flex;
+
+                @include mq("tablet") {
+                    display: block;
+                }
+
+                .by-genre-genre {
+                    flex-basis: 25%;
+                    margin: 0 5px;
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+
+                    @include mq("tablet") {
+                        margin: 0 0 15px 0;
+                    }
+
+                    .by-genre-genre-link {
+                        box-shadow: 0px 0px 6px 2px #999;
+                        @include movie-radius;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        height: 175px;
+                        color: $whiteColor;
+                        background: rgb(148, 91, 238);
+                        background: linear-gradient(
+                            122deg,
+                            rgba(148, 91, 238, 1) 0%,
+                            rgba(127, 195, 242, 1) 100%
+                        );
+                        font-weight: 500;
+                        font-size: 2em;
+
+                        &:hover {
+                            text-decoration: none;
+                            background: rgb(148, 91, 238);
+                            background: linear-gradient(
+                                317deg,
+                                rgba(148, 91, 238, 1) 0%,
+                                rgba(127, 195, 242, 1) 100%
+                            );
+                        }
+
+                        @include mq("tablet") {
+                            height: 70px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

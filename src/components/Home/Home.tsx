@@ -11,7 +11,7 @@ export interface IHomeProps {
 
 export const Home: React.FC<IHomeProps> = observer(({ homeVM }) => {
     return (
-        <div>
+        <div className="home">
             <TopMovies topMoviesVM={homeVM.topMoviesVM} />
             <ByGenre />
             <AllMovies allMoviesVM={homeVM.allMoviesVM} />

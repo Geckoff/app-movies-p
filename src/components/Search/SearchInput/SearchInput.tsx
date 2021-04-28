@@ -36,5 +36,5 @@ export const SearchInput: React.FC<ISearchInputProps> = observer(({ searchInputV
         setKeyword(location.pathname, location.search);
     }, [location]);
 
-    return <TextInput onKeyDown={onKeyDown} textInputVM={textIpnutVM} />;
+    return <TextInput placeholder="Search..." onKeyDown={onKeyDown} textInputVM={textIpnutVM} />;
 });
