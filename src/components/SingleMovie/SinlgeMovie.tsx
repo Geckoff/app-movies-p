@@ -7,6 +7,8 @@ import { ISingleMovieVM } from "./SingleMovieVM";
 import { Container } from "reactstrap";
 import FontAwesome from "react-fontawesome";
 import { ErrorMessage } from "components/Error";
+import { useLocation } from "react-router-dom";
+import { BackLink } from "components/Base/BackLink";
 
 export interface ISingleMovieProps {
     singleMovieVM: ISingleMovieVM;
@@ -21,11 +23,24 @@ export const SingleMovie: React.FC<ISingleMovieProps> = observer(({ singleMovieV
     }, []);
     const movie = singleMovieVM.movie;
 
+    const location = useLocation<{
+        sourcePath: string;
+        sourceTitle: string;
+    }>();
+    console.log(location.state?.sourcePath, location.state?.sourceTitle);
+
     return (
         <div className="single-movie page-content">
             <Container>
                 {movie ? (
                     <>
+                        <div className="single-movie-back-link">
+                            <BackLink
+                                toUrl={location.state?.sourcePath || "/"}
+                                toTitle={location.state?.sourceTitle || "Home"}
+                            />
+                        </div>
+
                         <div className="single-movie-main">
                             <div className="single-movie-image-block">
                                 <img className="single-movie-image" src={movie.posterPath} alt="" />

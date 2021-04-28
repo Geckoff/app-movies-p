@@ -1,9 +1,11 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
 $primaryColor: #2345e0;
+$primaryColorDark: #1a34ac;
 $fontColor: #333333;
 $whiteColor: #fff;
 $fontGreyColor: #bbbaba;
+$fontGreyColorDark: #858585;
 $borderGreyColor: #c7c7c7;
 $backGroungGreyColor: #f4f5fa;
 
@@ -65,6 +67,15 @@ body {
     font-size: 3em;
 }
 
+.link-back {
+    transition-duration: 0.3s;
+
+    &:hover {
+        text-decoration: none;
+        color: $fontGreyColorDark;
+    }
+}
+
 .link-button {
     display: inline-block;
     background-color: $primaryColor;
@@ -72,10 +83,12 @@ body {
     border-radius: 4px;
     color: $whiteColor;
     text-align: center;
+    transition-duration: 0.3s;
 
     &:hover {
         color: $whiteColor;
         text-decoration: none;
+        background-color: $primaryColorDark;
     }
 }
 
@@ -406,13 +419,16 @@ body {
 
 .genre {
     .genre-title {
-        &::first-letter {
-            text-transform: capitalize;
-        }
+        text-transform: capitalize;
     }
 }
 
 .single-movie {
+    .single-movie-back-link {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
     .single-movie-main {
         display: flex;
 

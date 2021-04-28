@@ -1,20 +1,22 @@
 import { observer } from "mobx-react";
 import React, { useCallback, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { parseLocationQSParams } from "utils/routerUtils";
 import { isNumeric } from "utils";
 import { IMoviesPaginationVM } from "./MoviesPaginationVM";
 import { Paginate } from "../Paginate";
 import { Select } from "../Input/Select";
 import { Label } from "reactstrap";
+import { MovieLink } from "../MovieLink";
 
 export interface IMoviesPaginationProps {
     pagePath: string;
     moviesPaginationVM: IMoviesPaginationVM;
+    sourceTitle: string;
 }
 
 export const MoviesPagination: React.FC<IMoviesPaginationProps> = observer(
-    ({ pagePath, moviesPaginationVM }) => {
+    ({ pagePath, moviesPaginationVM, sourceTitle }) => {
         const {
             setPage,
             loadCount,
@@ -62,13 +64,18 @@ export const MoviesPagination: React.FC<IMoviesPaginationProps> = observer(
                 <div className="movie-grid-items">
                     {moviesForPage.map((movie) => (
                         <div className="movie-grid-item" key={movie.id}>
-                            <Link className="movie-grid-item-link" to={`/movie/${movie.id}`}>
+                            <MovieLink
+                                className="movie-grid-item-link"
+                                id={movie.id}
+                                sourcePath={`${location.pathname}${location.search}`}
+                                sourceTitle={sourceTitle}
+                            >
                                 <img
                                     className="movie-grid-item-image"
                                     src={movie.posterPath}
                                     alt={movie.title}
                                 />
-                            </Link>
+                            </MovieLink>
                         </div>
                     ))}
                 </div>

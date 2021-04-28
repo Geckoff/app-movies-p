@@ -17,6 +17,7 @@ export const AllMovies: React.FC<IAllMoviesProps> = observer(({ allMoviesVM }) =
                     <h2 className="all-movies-title">Browse All</h2>
                     <div>
                         <MoviesPagination
+                            sourceTitle="Home"
                             moviesPaginationVM={allMoviesVM.moviesPaginationVM}
                             pagePath="/"
                         />

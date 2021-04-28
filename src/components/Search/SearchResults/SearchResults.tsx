@@ -1,3 +1,4 @@
+import { MovieLink } from "components/Base/MovieLink";
 import { ErrorMessage } from "components/Error";
 import { observer } from "mobx-react";
 import React, { useCallback, useEffect } from "react";
@@ -44,16 +45,18 @@ export const SearchResults: React.FC<ISearchResultsProps> = observer(({ searchRe
                             <div className="movie-grid-items">
                                 {searchResults.map((movie) => (
                                     <div className="movie-grid-item" key={movie.id}>
-                                        <Link
+                                        <MovieLink
                                             className="movie-grid-item-link"
-                                            to={`/movie/${movie.id}`}
+                                            id={movie.id}
+                                            sourcePath={`${location.pathname}${location.search}`}
+                                            sourceTitle="Search"
                                         >
                                             <img
                                                 className="movie-grid-item-image"
                                                 src={movie.posterPath}
                                                 alt={movie.title}
                                             />
-                                        </Link>
+                                        </MovieLink>
                                     </div>
                                 ))}
                             </div>

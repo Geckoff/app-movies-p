@@ -5,6 +5,7 @@ import { IGenreMoviesVM } from "./GenreMoviesVM";
 import { match } from "react-router";
 import { Container } from "reactstrap";
 import { ErrorMessage } from "components/Error";
+import { BackLink } from "components/Base/BackLink";
 
 export interface IGenreMoviesProps {
     genreMoviesVMs: { [key: string]: IGenreMoviesVM };
@@ -20,9 +21,13 @@ export const GenreMovies: React.FC<IGenreMoviesProps> = observer(({ match, genre
             <Container>
                 {genreMoviesVM ? (
                     <div>
-                        <h2 className="genre-title">{genreParam}</h2>
+                        <h3 className="genre-title">
+                            <BackLink toUrl="/" toTitle="Home" />{" "}
+                            <span className="genre-title-name">{genreParam}</span>
+                        </h3>
                         <div>
                             <MoviesPagination
+                                sourceTitle={genreParam!}
                                 moviesPaginationVM={genreMoviesVM.moviesPaginationVM}
                                 pagePath={`/genre/${genreParam}`}
                             />
